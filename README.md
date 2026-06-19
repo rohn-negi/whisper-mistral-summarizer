@@ -84,7 +84,7 @@ Download from [ffmpeg.org](https://ffmpeg.org/download.html) and add to PATH.
 
 ```bash
 git clone https://github.com/rohn-negi/whisper-mistral-summarizer.git
-cd audie
+cd whisper-mistral-summarizer
 pip install -r requirements.txt
 ```
 
