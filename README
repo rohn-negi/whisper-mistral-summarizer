@@ -1,0 +1,163 @@
+
+
+Transcribe any audio or YouTube video with OpenAI Whisper and get AI-powered summaries, topics, and named entities via Mistral — all from a clean browser interface.
+
+---
+
+## Demo
+
+> Upload an audio file or paste a YouTube URL → Whisper transcribes → Mistral summarizes → results in seconds.
+
+---
+
+## How It Works
+
+```
+Audio File / YouTube URL
+        ↓
+  audio_utils.py     → Download + preprocess audio (mono, 16kHz, normalized)
+        ↓
+  transcriber.py     → Transcribe audio to text (OpenAI Whisper)
+        ↓
+  summarizer.py      → Summarize transcript (Mistral AI via LangChain)
+        ↓
+  pipeline.py        → Orchestrates all stages
+        ↓
+  app.py             → Gradio browser interface
+```
+
+---
+
+## Features
+
+- Paste any YouTube URL and transcribe it instantly
+- Upload your own audio file (MP3, WAV, M4A, OGG, and more)
+- Automatic language detection across 99+ languages
+- Structured summaries — overview, key points, conclusion
+- Key topic extraction and named entity recognition
+- Output summary in English, Hindi, Spanish, French, or German
+- Choose Whisper model size based on speed vs accuracy tradeoff
+- Clean browser UI — no terminal needed
+
+---
+
+## Project Structure
+
+```
+audie/
+├── app.py              # Gradio browser interface
+├── pipeline.py         # Main orchestrator
+├── audio_utils.py      # Audio download and preprocessing
+├── transcriber.py      # Whisper transcription
+├── summarizer.py       # LangChain + Mistral summarization
+├── .env                # API keys (never commit this)
+├── requirements.txt    # Dependencies
+└── uploads/            # Auto-created, stores processed audio files
+```
+
+---
+
+## Requirements
+
+- Python 3.9+
+- FFmpeg installed on your system
+- Mistral API key
+
+### Install FFmpeg
+
+**Ubuntu/Debian:**
+```bash
+sudo apt install ffmpeg
+```
+
+**macOS:**
+```bash
+brew install ffmpeg
+```
+
+**Windows:**
+Download from [ffmpeg.org](https://ffmpeg.org/download.html) and add to PATH.
+
+---
+
+## Installation
+
+```bash
+git clone https://github.com/rohn-negi/whisper-mistral-summarizer.git
+cd audie
+pip install -r requirements.txt
+```
+
+Create a `.env` file in the project root:
+```
+MISTRAL_API_KEY=your_mistral_api_key_here
+```
+
+---
+
+## Usage
+
+### Browser UI
+```bash
+python app.py
+```
+Opens at `http://127.0.0.1:7860` in your browser.
+
+### Terminal
+```bash
+python pipeline.py
+```
+Prompts you for URL/file, model, and language directly in the terminal.
+
+---
+
+## Whisper Model Guide
+
+| Model  | Size   | Speed         | Best For                  |
+|--------|--------|---------------|---------------------------|
+| tiny   | 39M    | ~32x realtime | Quick tests               |
+| base   | 74M    | ~16x realtime | Fast, decent accuracy     |
+| small  | 244M   | ~6x realtime  | Good balance              |
+| medium | 769M   | ~2x realtime  | Recommended default       |
+| large  | 1550M  | ~1x realtime  | Best accuracy, needs GPU  |
+
+---
+
+## Output
+
+| Field       | Description                                              |
+|-------------|----------------------------------------------------------|
+| Transcript  | Full verbatim text of everything spoken                  |
+| Summary     | Structured markdown — overview, key points, conclusion   |
+| Key Topics  | Up to 5 main themes discussed                            |
+| Entities    | People, places, organizations, and products mentioned    |
+
+---
+
+## Dependencies
+
+```
+openai-whisper
+yt-dlp
+pydub
+gradio
+langchain
+langchain-mistralai
+langchain-core
+python-dotenv
+```
+
+---
+
+## Notes
+
+- Whisper models are downloaded automatically on first use and cached locally
+- All audio is saved to `uploads/` after processing
+- For long audio on CPU, expect the `large` model to be slow — a GPU is recommended
+- The `uploads/` folder is created automatically on first run
+
+---
+
+## License
+
+MIT

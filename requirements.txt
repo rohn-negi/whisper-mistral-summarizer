@@ -1,0 +1,7 @@
+openai-whisper
+langchain
+langchain-mistralai
+pydub
+yt-dlp
+python-dotenv
+gradio
